@@ -24,11 +24,38 @@ describe GildedRose do
         GildedRose.new(items).update_quality()
         expect(items[0].quality).to eq(8)
       end
+      it "tests normal item cannot go under 0" do
+        items = [Item.new("foo", 0, 0)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(0)
+      end
+
       it "tests Sulfuras" do
         items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 10)]
         GildedRose.new(items).update_quality()
         expect(items[0].quality).to eq(10)
       end
+      it "tests Aged Brie" do
+        items = [Item.new("Aged Brie", 10, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(11)
+      end
+      it "tests expired Aged Brie" do
+        items = [Item.new("Aged Brie", 0, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(12)
+      end
+      it "tests item quality does not go over 50 " do
+        items = [Item.new("Aged Brie", 0, 49)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(50)
+      end
+      it "tests item quality of 50 stays 50" do
+        items = [Item.new("Aged Brie", 10, 50)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(50)
+      end
+
     end
   end
 
