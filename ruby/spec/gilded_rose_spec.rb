@@ -14,6 +14,16 @@ describe GildedRose do
       expect(items[0].sell_in).to eq(0)
     end
     context 'quality tests' do
+      it "tests normal item" do
+        items = [Item.new("foo", 20, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(9)
+      end
+      it "tests normal expired item" do
+        items = [Item.new("foo", 0, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq(8)
+      end
       it "tests Sulfuras" do
         items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 10)]
         GildedRose.new(items).update_quality()
